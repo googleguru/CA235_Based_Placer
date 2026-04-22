@@ -1,8 +1,7 @@
 # � CA based placer MetaOpt
 
-> **Metaheuristic VLSI Placement Optimization — GPU-Free, Deep Learning-Free**
+> **Metaheuristic VLSI Placement Optimization — GPU-Free**
 
-A high-performance reimplementation of [DREAMPlace](https://github.com/limbo018/DREAMPlace) that replaces PyTorch with three cutting-edge metaheuristic algorithms. Optimizes chip placement through density-driven cell spreading, surrogate-based search, and particle swarm intelligence.
 
 ---
 
