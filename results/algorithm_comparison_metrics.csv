@@ -1,0 +1,4 @@
+algorithm_key,algorithm,hpwl,density_overflow,runtime_s,iterations
+sbo,Hybrid SBO,2205784708.238782,2371.990822,1103.789,20
+pso,PSO + SBO,2219870575.924387,2849.383456,224.312,20
+ca235,CA235,161683059.084663,3425.871378,115.434,20

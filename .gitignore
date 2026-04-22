@@ -1,0 +1,10 @@
+# Benchmark data files (large LFS-tracked files - not included)
+benchmarks/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.nbc
+*.nbi

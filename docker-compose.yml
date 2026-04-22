@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # CPU-only image (recommended for local development)
+  dreamplace-cpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    image: dreamplace:latest-cpu
+    container_name: dreamplace_cpu_runner
+    volumes:
+      - ./benchmarks:/app/benchmarks:ro
+      - ./results:/app/results:rw
+      - ./designs:/app/designs:ro
+    environment:
+      - N_JOBS=8
+      - BATCH_MODE=true
+      - OMP_NUM_THREADS=8
+      - OPENBLAS_NUM_THREADS=8
+    cpus: 8
+    mem_limit: 16gb
+    entrypoint: python
+    command: ["run.py", "--batch", "--n_jobs", "8", "--benchmark", "benchmarks/ispd2005/bigblue4"]
+
+  # GPU-enabled image (for clusters with NVIDIA GPUs)
+  dreamplace-gpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: gpu
+    image: dreamplace:latest-gpu
+    container_name: dreamplace_gpu_runner
+    volumes:
+      - ./benchmarks:/app/benchmarks:ro
+      - ./results:/app/results:rw
+      - ./designs:/app/designs:ro
+    environment:
+      - N_JOBS=8
+      - BATCH_MODE=true
+      - USE_GPU=true
+      - OMP_NUM_THREADS=8
+    cpus: 8
+    mem_limit: 16gb
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    entrypoint: python
+    command: ["run.py", "--batch", "--n_jobs", "8", "--use_gpu", "--benchmark", "benchmarks/ispd2005/bigblue4"]
+
+  # Development image with interactive shell
+  dreamplace-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    image: dreamplace:latest-dev
+    container_name: dreamplace_dev
+    volumes:
+      - .:/app:rw
+      - ./benchmarks:/app/benchmarks:ro
+      - ./results:/app/results:rw
+    environment:
+      - N_JOBS=8
+      - OMP_NUM_THREADS=8
+      - OPENBLAS_NUM_THREADS=8
+    cpus: 8
+    mem_limit: 16gb
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/bash
