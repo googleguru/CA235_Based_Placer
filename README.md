@@ -1,4 +1,4 @@
-# � CA based placer MetaOpt
+#  CA based placer
 
 > **Metaheuristic VLSI Placement Optimization — GPU-Free**
 
